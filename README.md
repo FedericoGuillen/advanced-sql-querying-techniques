@@ -198,68 +198,6 @@ create_statements_final_project_mysql.sql
 
 ---
 
-## Example SQL Patterns
-
-### Ranking salaries by year
-
-```sql
-WITH player_salary_rank AS (
-    SELECT
-        playerid,
-        yearid,
-        teamid,
-        salary,
-        RANK() OVER (
-            PARTITION BY yearid
-            ORDER BY salary DESC
-        ) AS salary_rank
-    FROM salaries
-)
-SELECT
-    playerid,
-    yearid,
-    teamid,
-    salary,
-    salary_rank
-FROM player_salary_rank
-WHERE salary_rank <= 10
-ORDER BY yearid, salary_rank;
-```
-
-### Comparing values with the previous period
-
-```sql
-SELECT
-    playerid,
-    yearid,
-    salary,
-    LAG(salary) OVER (
-        PARTITION BY playerid
-        ORDER BY yearid
-    ) AS previous_salary,
-    salary - LAG(salary) OVER (
-        PARTITION BY playerid
-        ORDER BY yearid
-    ) AS salary_change
-FROM salaries;
-```
-
-### Identifying values above the overall average
-
-```sql
-SELECT
-    playerid,
-    yearid,
-    salary
-FROM salaries
-WHERE salary > (
-    SELECT AVG(salary)
-    FROM salaries
-)
-ORDER BY salary DESC;
-```
-
-> The examples above illustrate the analytical patterns covered in the repository. Table and column names should be adjusted to match the loaded course schema.
 
 ---
 
@@ -347,9 +285,8 @@ By completing this project, I strengthened my ability to:
 ## Author
 
 **Federico Guillen D'Auri**  
-Business Processing Specialist | Aspiring Data Analyst
+Associate Business Intelligence Analyst
 
-- [LinkedIn](https://www.linkedin.com/in/federicoguillendauri)
 - [GitHub](https://github.com/FedericoGuillen)
 
 ---
